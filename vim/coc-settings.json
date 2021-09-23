@@ -1,0 +1,4 @@
+{
+    "clangd.enabled": true,
+    "clangd.fallbackFlags": ["-std=c++20"]
+}
