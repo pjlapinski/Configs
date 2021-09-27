@@ -1,6 +1,12 @@
-" --- PLUGINS ---
+"--- PLUGINS ---
 
 
+
+let g:polyglot_disabled =['cpp', 'c++', 'c']
+let g:syntastic_mode_map = {
+            \ 'mode': 'active',
+            \ 'passive_filetypes': ['cpp', 'c++', 'c']
+            \}
 " Run PlugInstall if there are missing plugins
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
@@ -24,6 +30,8 @@ Plug 'mhinz/vim-startify' "Startup menu
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/syntastic'
 Plug 'sheerun/vim-polyglot'
+Plug 'pappasam/coc-jedi', { 'do': 'npm ci && npm run build', 'branch': 'main' }
+Plug 'rhysd/vim-clang-format'
 " Plug 'omnisharp/omnisharp-vim'
 
 Plug 'chrisbra/colorizer' " Color the colornames and codes
@@ -38,6 +46,9 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Debugging
+Plug 'puremourning/vimspector'
+
 call plug#end()
 
 colorscheme gruvbox
@@ -53,8 +64,8 @@ let g:NERDCreateDefaultMappings = 0
 
 let g:colorizer_auto_color = 1
 let g:coc_global_extensions = [
-    \ 'coc-json',
     \ 'coc-git',
+    \ 'coc-json',
     \ 'coc-snippets',
     \ 'coc-tsserver',
     \ 'coc-eslint',
@@ -84,7 +95,30 @@ let g:coc_global_extensions = [
 
 
 
+" Come on Vim, be consistent
+nnoremap Y y$
+" Keep cursor at the same position with J
+nnoremap J mzJ`z
+" Keep the search centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+" Additional undo break points
+inoremap , ,<C-g>u
+inoremap . .<C-g>u
+inoremap ! !<C-g>u
+inoremap ? ?<C-g>u
+" Moving text around
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
+inoremap <C-j> <esc>:m .+1<CR>==
+inoremap <C-k> <esc>:m .-2<CR>==
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+
 let mapleader = " "
+
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gr <Plug>(coc-references)
 
 "Kill the current buffer
 nmap <leader>q :bd!<CR>
@@ -108,24 +142,49 @@ nmap <C-_> :call nerdcommenter#Comment('n', 'Toggle')<CR>
 vmap <C-_> :call nerdcommenter#Comment('x', 'Toggle')<CR>
 " Open terminal split
 nmap <leader>tt :terminal<CR>
+
 " Open NERDTree
 nmap <C-n> :NERDTreeToggle<CR>
+" Show git diff
+nmap gs <Plug>(coc-git-chunkinfo)
 
 let NERDTreeCustomOpenArgs = {'file':{'where': 't'}}
 let NERDTreeShowHidden = 1
 
-" Run NERDTree on startup
-autocmd VimEnter * NERDTree | wincmd p
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
+"-Debugging
+nmap <leader>dd :call vimspector#Launch()<CR>
+nmap <leader>de :call vimspector#Reset()<CR>
+nmap <leader>di <Plug>VimspectorStepInto
+nmap <leader>do <Plug>VimspectorStepOver
+nmap <leader>dO <Plug>VimspectorStepOut
+nmap <leader>db <Plug>VimspectorToggleBreakpoint
+nnoremap <leader>d<space> :call vimspector#Continue()<CR>
+
+" Set the clang-format style
+let g:clang_format#style_options = {
+            \ 'BasedOnStyle': 'WebKit',
+            \ 'IndentWidth': 4,
+            \ 'FixNamespaceComments': 'false',
+            \ 'NamespaceIndentation': 'All',
+            \ 'BreakBeforeBraces': 'Attach'
+            \}
+
+" Autoformat C/C++ code on buffer save
+autocmd BufWritePre *.cpp ClangFormat
+autocmd BufWritePre *.hpp ClangFormat
+autocmd BufWritePre *.c ClangFormat
+autocmd BufWritePre *.h ClangFormat
+
 " Open file explorer on the right
 let g:NERDTreeWinPos = 'right'
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <silent><expr> <c-@> coc#refresh()
 
 fun! TrimWhitespace()
     let l:save = winsaveview()
@@ -220,4 +279,3 @@ let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
 let &t_ut=''
 :autocmd VimEnter * normal! :startinsert :stopinsert
-
