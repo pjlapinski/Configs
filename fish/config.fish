@@ -14,14 +14,16 @@ alias fgrep='fgrep --color=auto'
 alias cp='cp -i'
 alias mv='mv -i'
 
-set -l recent_exec ~/.config/NotionTODO/.exec_time
-if not [ -e $recent_exec ]
-    touch $recent_exec
-    notion_todo
+# Executes after the shell has started
+function fish_greeting
+    set -l recent_exec ~/.config/NotionTODO/.exec_time
+    if not test -e $recent_exec
+        touch $recent_exec
+        notion_todo --silent
+    end
+    # Only run on startup once every 8 hours
+    if [ (math (date +%s) - (stat --printf "%Y" $recent_exec)) -gt 28800 ]
+        touch $recent_exec
+        notion_todo --silent
+    end
 end
-# Only run on startup once every 8 hours
-if [ (math (date +%s) - (stat --printf "%Y" $recent_exec)) -gt 28800 ]
-    touch $recent_exec
-    notion_todo
-end
-
