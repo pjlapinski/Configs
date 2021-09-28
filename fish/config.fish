@@ -1,9 +1,11 @@
+abbr -a cls clear
+
 alias ls='exa --color=always --group-directories-first'
-alias tree='exa -T'
+abbr -a tree ls -T
 abbr -a l ls
 abbr -a ll ls -alh --git
 abbr -a la ls -a
-abbr -a l. 'exa -Fa | egrep "^\."'
+abbr -a l. 'ls -Fa | egrep "^\."'
 
 set -gx PATH ~/.scripts/ $PATH
 
@@ -27,3 +29,4 @@ function fish_greeting
         notion_todo --silent
     end
 end
+
