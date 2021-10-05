@@ -27,6 +27,11 @@ function fish_greeting
     if [ (math (date +%s) - (stat --printf "%Y" $recent_exec)) -gt 28800 ]
         touch $recent_exec
         notion_todo --silent
+    else
+        if [ (random 1 2) -eq 1 ]
+            echo '( .-.)'
+        else
+            echo '( ^-^)'
+        end
     end
 end
-
