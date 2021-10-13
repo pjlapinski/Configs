@@ -184,7 +184,7 @@ autocmd BufWritePre *.h ClangFormat
 let g:NERDTreeWinPos = 'right'
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-@> coc#refresh()
+inoremap <c-@> coc#refresh()
 
 fun! TrimWhitespace()
     let l:save = winsaveview()
