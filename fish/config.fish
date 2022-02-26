@@ -29,10 +29,7 @@ function fish_greeting
         touch $recent_exec
         notion_todo --silent
     else
-        if [ (random 1 2) -eq 1 ]
-            echo '( .-.)'
-        else
-            echo '( ^-^)'
-        end
+        set -l greetings '( .-.)' '( ^-^)'
+        echo (random choice $greetings)
     end
 end
