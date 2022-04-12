@@ -7,7 +7,7 @@ abbr -a ll ls -alh --git
 abbr -a la ls -a
 abbr -a l. 'ls -Fa | egrep "^\."'
 
-set -gx PATH ~/.scripts/ $PATH
+set -gx PATH ~/.scripts/ ~/Shortcuts/ $PATH
 
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
@@ -33,3 +33,6 @@ function fish_greeting
         echo (random choice $greetings)
     end
 end
+
+# Theme for bobthefish from omf
+set theme_color_scheme 'gruvbox'
