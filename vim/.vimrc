@@ -24,7 +24,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 \| endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'ayu-theme/ayu-vim' "Theme
+Plug 'morhetz/gruvbox' "Theme
 Plug 'mhinz/vim-startify' "Startup menu
 " Language packs & Code autocompletion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -51,8 +51,8 @@ Plug 'puremourning/vimspector'
 
 call plug#end()
 
-let ayucolor='dark'
-colorscheme ayu
+set bg=dark
+colorscheme gruvbox
 let g:airline_theme='bubblegum'
 let g:airline#extensions#tabline#enabled = 1
 
