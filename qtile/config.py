@@ -88,7 +88,7 @@ keys = [
 ]
 
 layouts = [
-    layout.MonadTall(border_normal='#000000', border_focus=colors['blue']),
+    layout.MonadTall(border_normal='#000000', border_focus=colors['blue'], margin=8),
     layout.Max(),
     layout.Floating(border_normal='#000000', border_focus=colors['blue'])
 ]
