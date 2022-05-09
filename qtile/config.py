@@ -11,8 +11,8 @@ mod = 'mod4'
 browser = 'vivaldi-stable'
 
 terminal = 'kitty'
-terminal_file_manager = ''
-terminal_command_prefix = 'ranger'
+terminal_file_manager = 'ranger'
+terminal_command_prefix = 'sh -c'
 
 graphical_file_manager = 'dolphin'
 
@@ -81,7 +81,7 @@ keys = [
     Key([mod, 'shift'], 'slash', lazy.spawn(
         f'python {config_path}/list_keys.py'), desc='Spawn a window that lists all keybindings'),
     Key([mod], 'b', lazy.spawn(browser), desc='Spawn a browser window'),
-    Key([mod], 'e', lazy.spawn(f'{terminal} {terminal_command_prefix} {terminal_file_manager}'), desc='Spawn the terminal file manager'),
+    Key([mod], 'e', lazy.spawn(f'{terminal} {terminal_command_prefix} "{terminal_file_manager}"'), desc='Spawn the terminal file manager'),
     Key([mod, 'shift'], 'e', lazy.spawn(graphical_file_manager), desc='Spawn the graphical file manager'),
     Key([], 'Print', lazy.spawn('spectacle'), desc='Spawn the screenshot utility'),
     Key([mod], 't', lazy.spawn(text_editor), desc='Spawn the text editor')
@@ -194,6 +194,20 @@ def make_widgets():
         ),
         widget.TextBox(
             background=colors['orange'],
+            foreground=colors['green'],
+            **powerline_arrow_styling
+        ),
+        widget.CheckUpdates(
+            background=colors['green'],
+            colour_have_updates=colors['foreground_alt'],
+            colour_no_updates=colors['foreground_alt'],
+            no_update_string='Updates: 0',
+            custom_command='yay -Qu',
+            update_interval=20,
+            mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(f'{terminal} {terminal_command_prefix} "yay -Syyu ; fish"')},
+        ),
+        widget.TextBox(
+            background=colors['green'],
             foreground=colors['yellow'],
             **powerline_arrow_styling
         ),
@@ -206,9 +220,8 @@ main_screen_widgets = make_widgets()
 # There can be only one systray, and there is no need for another net monitor
 second_screen_widgets = [
     w for w in make_widgets() if not
-    (isinstance(w, widget.Net | widget.Systray) or
-     isinstance(w, widget.TextBox) and
-     w.background == colors['purple'])
+    (isinstance(w, widget.Net | widget.Systray | widget.CheckUpdates) or
+     isinstance(w, widget.TextBox) and (w.background == colors['purple'] or w.background == colors['orange']))
 ]
 
 # Fix the 'powerline' colors
