@@ -81,6 +81,7 @@ keys = [
     Key([mod, 'shift'], 'slash', lazy.spawn(
         f'python {config_path}/list_keys.py'), desc='Spawn a window that lists all keybindings'),
     Key([mod], 'b', lazy.spawn(browser), desc='Spawn a browser window'),
+    Key([mod], 'n', lazy.spawn('notion-app'), desc='Spawn a Notion App window'),
     Key([mod], 'e', lazy.spawn(f'{terminal} {terminal_command_prefix} "{terminal_file_manager}"'), desc='Spawn the terminal file manager'),
     Key([mod, 'shift'], 'e', lazy.spawn(graphical_file_manager), desc='Spawn the graphical file manager'),
     Key([], 'Print', lazy.spawn('spectacle'), desc='Spawn the screenshot utility'),
