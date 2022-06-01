@@ -7,7 +7,8 @@ abbr -a ll ls -alh --git
 abbr -a la ls -a
 abbr -a l. 'ls -Fa | egrep "^\."'
 
-set -gx PATH ~/.scripts/ ~/Shortcuts/ $PATH
+set -gx PATH $HOME/.scripts/ $HOME/Shortcuts/ $PATH
+set -gx XDG_CONFIG_HOME $HOME/.config
 
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
@@ -18,11 +19,7 @@ alias mv='mv -i'
 
 # Executes after the shell has started
 function fish_greeting
-    set -l config_dir ~/.config/NotionTODO
-    if not test -d $config_dir
-        mkdir $config_dir
-    end
-    set -l recent_exec $config_dir/.exec_time
+    set -l recent_exec ~/.config/NotionTODO/.exec_time
     if not test -e $recent_exec
         touch $recent_exec
         notion_todo --silent
