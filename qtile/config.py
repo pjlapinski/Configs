@@ -16,7 +16,7 @@ terminal_command_prefix = 'sh -c'
 
 graphical_file_manager = 'dolphin'
 
-text_editor = 'gvim'
+text_editor = 'neovide'
 
 font = 'Fira Mono for Powerline'
 
@@ -81,15 +81,20 @@ keys = [
     Key([mod, 'shift'], 'slash', lazy.spawn(
         f'python {config_path}/list_keys.py'), desc='Spawn a window that lists all keybindings'),
     Key([mod], 'b', lazy.spawn(browser), desc='Spawn a browser window'),
-    Key([mod], 'n', lazy.spawn('notion-app'), desc='Spawn a Notion App window'),
-    Key([mod], 'e', lazy.spawn(f'{terminal} {terminal_command_prefix} "{terminal_file_manager}"'), desc='Spawn the terminal file manager'),
-    Key([mod, 'shift'], 'e', lazy.spawn(graphical_file_manager), desc='Spawn the graphical file manager'),
-    Key([], 'Print', lazy.spawn('spectacle'), desc='Spawn the screenshot utility'),
+    Key([mod], 'n', lazy.spawn('notion-app'),
+        desc='Spawn a Notion App window'),
+    Key([mod], 'e', lazy.spawn(
+        f'{terminal} {terminal_command_prefix} "{terminal_file_manager}"'), desc='Spawn the terminal file manager'),
+    Key([mod, 'shift'], 'e', lazy.spawn(graphical_file_manager),
+        desc='Spawn the graphical file manager'),
+    Key([], 'Print', lazy.spawn('spectacle'),
+        desc='Spawn the screenshot utility'),
     Key([mod], 't', lazy.spawn(text_editor), desc='Spawn the text editor')
 ]
 
 layouts = [
-    layout.MonadTall(border_normal='#000000', border_focus=colors['blue'], margin=8),
+    layout.MonadTall(border_normal='#000000',
+                     border_focus=colors['blue'], margin=8),
     layout.Max(),
     layout.Floating(border_normal='#000000', border_focus=colors['blue'])
 ]
@@ -98,7 +103,8 @@ groups = [
     Group('DEV', layout='monadtall'),
     Group('WWW', layout='monadtall', matches=[Match(wm_class=browser)]),
     Group('GAME', layout='max'),
-    Group('CHAT', layout='monadtall', matches=[Match(wm_class='telegram-desktop'), Match(wm_class='discord')]),
+    Group('CHAT', layout='monadtall', matches=[
+          Match(wm_class='telegram-desktop'), Match(wm_class='discord')]),
     Group('MISC', layout='monadtall')
 ]
 
@@ -121,6 +127,7 @@ widget_defaults = {
 extension_defaults = widget_defaults.copy()
 
 powerline_left_arrow = u'\ue0b2'
+
 
 def make_widgets():
     widget_styling = {
@@ -191,7 +198,8 @@ def make_widgets():
             background=colors['orange'],
             foreground=colors['foreground_alt'],
             interface='enp37s0', format='{down} ↓↑ {up}',
-            mouse_callbacks={'Button1': lambda: qtile.cmd_spawn('nm-connection-editor')}
+            mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(
+                'nm-connection-editor')}
         ),
         widget.TextBox(
             background=colors['orange'],
@@ -204,8 +212,9 @@ def make_widgets():
             colour_no_updates=colors['foreground_alt'],
             no_update_string='Updates: 0',
             custom_command='yay -Qu',
-            update_interval=20,
-            mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(f'{terminal} {terminal_command_prefix} "yay -Syyu ; fish"')},
+            update_interval=60,
+            mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(
+                f'{terminal} {terminal_command_prefix} "yay -Syyu ; fish"')},
         ),
         widget.TextBox(
             background=colors['green'],
@@ -215,6 +224,7 @@ def make_widgets():
         widget.Clock(**widget_styling[widget.Clock]),
         widget.Sep(linewidth=0, padding=10, background=colors['yellow']),
     ]
+
 
 main_screen_widgets = make_widgets()
 
@@ -226,7 +236,8 @@ second_screen_widgets = [
 ]
 
 # Fix the 'powerline' colors
-[w for w in second_screen_widgets if isinstance(w, widget.TextBox)][-1].background = colors['purple']
+[w for w in second_screen_widgets if isinstance(
+    w, widget.TextBox)][-1].background = colors['purple']
 
 
 screens = [
@@ -259,9 +270,9 @@ floating_layout = layout.Floating(
         Match(wm_class='ssh-askpass'),  # ssh-askpass
         Match(title='branchdialog'),  # gitk
         Match(title='pinentry'),  # GPG key password entry
-        Match(wm_class='Yad'), # custom dialogue boxes
-        Match(wm_class='Mirage'), # image viewer
-        Match(wm_class='mpv'), # video player
+        Match(wm_class='Yad'),  # custom dialogue boxes
+        Match(wm_class='Mirage'),  # image viewer
+        Match(wm_class='mpv'),  # video player
     ]
 )
 
@@ -274,6 +285,8 @@ wl_input_rules = None
 wmname = 'LG3D'
 
 # Run the autostart file
+
+
 @hook.subscribe.startup_once
 def autostart():
     subprocess.run([f'{config_path}/autostart.sh'])
