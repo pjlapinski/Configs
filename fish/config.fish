@@ -1,6 +1,8 @@
 abbr -a cls clear
 
 alias ls='exa --color=always --group-directories-first'
+alias vim='nvim'
+
 abbr -a tree ls -T
 abbr -a l ls
 abbr -a ll ls -alh --git
