@@ -1,8 +1,16 @@
 " Install vim-plug if not found
-if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-    silent sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs
-              \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+let autoload_plug_path = stdpath('data') . '/site/autoload/plug.vim'
+if !filereadable(autoload_plug_path)
+  silent execute '!curl -fLo ' . autoload_plug_path . '  --create-dirs
+      \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+unlet autoload_plug_path
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
 
 call plug#begin('~/.config/nvim/plugged')
 
@@ -29,10 +37,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tmsvg/pear-tree' " Auto insert bracket pairs
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'tell-k/vim-autopep8'
-
-    " Syntax highlights
-    Plug 'scrooloose/syntastic'
-    Plug 'sheerun/vim-polyglot'
+    Plug 'ray-x/lsp_signature.nvim'
 
     " Git
     Plug 'airblade/vim-gitgutter'
@@ -81,6 +86,13 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
+" Enable smart pairing in pear-tree
+let g:pear_tree_smart_openers = 0
+let g:pear_tree_smart_closers = 0
+let g:pear_tree_smart_backspace = 0
+
+let g:pear_tree_map_special_keys = 0
+
 " Autoformat code on buffer save
 autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 100)
 
@@ -100,6 +112,24 @@ for _, lsp in ipairs(servers) do
 end
 EOF
 
+" Setup treesitter highlighting
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = "all",
+    sync_install = true,
+    highlight = {
+        enable = true
+    }
+}
+EOF
+
+" Setup lsp_signature
+lua << EOF
+require'lsp_signature'.setup {
+    bind = true
+}
+EOF
+
 fun! TrimWhitespace()
     let l:save = winsaveview()
     keeppatterns %s/\s\+$//e
@@ -113,4 +143,3 @@ augroup END
 
 source ~/.config/nvim/keybinds.vim
 source ~/.config/nvim/vim_settings.vim
-
