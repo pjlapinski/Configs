@@ -41,6 +41,9 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Git
     Plug 'airblade/vim-gitgutter'
+    
+    " Misc
+    Plug 'machakann/vim-highlightedyank'
 
 call plug#end()
 
