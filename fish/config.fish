@@ -11,6 +11,7 @@ abbr -a l. 'ls -Fa | egrep "^\."'
 
 set -gx PATH $HOME/.scripts/ $HOME/Shortcuts/ $PATH
 set -gx XDG_CONFIG_HOME $HOME/.config
+set -gx DOTNET_SYSTEM_GLOBALIZATION_INVARIANT 1
 
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
