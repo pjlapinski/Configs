@@ -66,9 +66,9 @@ keys = [
     Key([mod, 'shift'], 'f', lazy.window.toggle_fullscreen(),
         desc='Toggle window fullscreen mode'),
     # Move between screens
-    Key([mod], 'period', lazy.next_screen(), desc='Move focus to next screen'),
-    Key([mod], 'comma', lazy.prev_screen(),
+    Key([mod], 'period', lazy.prev_screen(),
         desc='Move focus to previous screen'),
+    Key([mod], 'comma', lazy.next_screen(), desc='Move focus to next screen'),
     # Running programs
     Key([mod], 'Return', lazy.spawn(terminal), desc='Launch terminal'),
     Key([mod], 'r', lazy.spawn(
@@ -126,6 +126,7 @@ widget_defaults = {
 
 extension_defaults = widget_defaults.copy()
 
+powerline_right_arrow = u'\ue0b0'
 powerline_left_arrow = u'\ue0b2'
 
 
@@ -157,16 +158,16 @@ def make_widgets():
         widget.Clock: {
             'background': colors['yellow'],
             'foreground': colors['foreground_alt'],
-            'format': '%a, %d.%m.%Y %I:%M %p'
+            'format': '%a, %d.%m.%Y %I:%M:%S %p'
         }
     }
-
     powerline_arrow_styling = {
         'text': powerline_left_arrow,
         'fontsize': 24,
         'padding': 0,
         'width': 14
     }
+
     return [
         widget.CurrentScreen(**widget_styling[widget.CurrentScreen]),
         widget.Sep(foreground=colors['gray'], padding=0),
@@ -234,15 +235,24 @@ second_screen_widgets = [
     (isinstance(w, widget.Net | widget.Systray | widget.CheckUpdates) or
      isinstance(w, widget.TextBox) and (w.background == colors['purple'] or w.background == colors['orange']))
 ]
+third_screen_widgets = [
+    w for w in make_widgets() if not
+    (isinstance(w, widget.Net | widget.Systray | widget.CheckUpdates) or
+     isinstance(w, widget.TextBox) and (w.background == colors['purple'] or w.background == colors['orange']))
+]
 
 # Fix the 'powerline' colors
 [w for w in second_screen_widgets if isinstance(
     w, widget.TextBox)][-1].background = colors['purple']
 
+[w for w in third_screen_widgets if isinstance(
+    w, widget.TextBox)][-1].background = colors['purple']
+
 
 screens = [
     Screen(top=bar.Bar(widgets=main_screen_widgets, size=23)),
-    Screen(top=bar.Bar(widgets=second_screen_widgets, size=23))
+    Screen(top=bar.Bar(widgets=second_screen_widgets, size=23)),
+    Screen(top=bar.Bar(widgets=third_screen_widgets, size=23))
 ]
 
 # Drag floating layouts.
@@ -284,9 +294,8 @@ auto_minimize = False
 wl_input_rules = None
 wmname = 'LG3D'
 
+
 # Run the autostart file
-
-
 @hook.subscribe.startup_once
 def autostart():
     subprocess.run([f'{config_path}/autostart.sh'])
