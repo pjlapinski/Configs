@@ -40,3 +40,9 @@ end
 
 # Theme for bobthefish from omf
 set theme_color_scheme 'gruvbox'
+
+# rust
+set PATH $PATH /home/beton/.cargo/bin
+
+# Created by `pipx` on 2022-07-01 19:45:22
+set PATH $PATH /home/beton/.local/bin
