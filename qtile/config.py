@@ -95,12 +95,14 @@ keys = [
 layouts = [
     layout.MonadTall(border_normal='#000000',
                      border_focus=colors['blue'], margin=8),
+    layout.MonadWide(border_normal='#000000',
+                     border_focus=colors['blue'], margin=8),
     layout.Max(),
     layout.Floating(border_normal='#000000', border_focus=colors['blue'])
 ]
 
 groups = [
-    Group('DEV', layout='monadtall'),
+    Group('DEV', layout='monadwide'),
     Group('WWW', layout='monadtall', matches=[Match(wm_class=browser)]),
     Group('GAME', layout='max'),
     Group('CHAT', layout='monadtall', matches=[
