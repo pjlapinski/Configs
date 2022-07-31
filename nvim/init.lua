@@ -43,6 +43,7 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 
     -- Misc
     Plug 'machakann/vim-highlightedyank'
+    Plug 'ahmedkhalf/lsp-rooter.nvim'
 vim.call('plug#end')
 
 require'impatient'
