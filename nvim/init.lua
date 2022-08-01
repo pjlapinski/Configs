@@ -23,6 +23,8 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
     Plug 'preservim/nerdtree'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+    Plug 'francoiscabrol/ranger.vim'
+    Plug 'rbgrouleff/bclose.vim'
 
     -- LSP
     Plug 'neovim/nvim-lspconfig'
@@ -71,13 +73,15 @@ vim.g.NERDCreateDefaultMappings = 0
 
 -- NERDTree
 vim.g.NERDTreeCustomOpenArgs = {['file'] = {['where'] = 't'}}
-vim.g.NERDTreeShowHidden = 1
-vim.g.NERDTreeDirArrowExpandable = '▶'
-vim.g.NERDTreeDirArrowCollapsible = '▼'
-vim.g.NERDTreeShowLineNumbers=1
-vim.g.NERDTreeMinimalUI = 1
+vim.g.NERDTreeShowHidden = true
+vim.g.NERDTreeShowLineNumbers = true
 vim.g.NERDTreeWinPos = 'right'
+vim.g.NERDTreeHijackNetrw = false
+vim.g.NERDTreeMinimalUI = true
 vim.g.NERDTreeWinSize = 38
+
+-- Run ranger instead of netrw or NERDTree
+vim.g.ranger_replace_netrw = true
 
 -- Enable smart pairing in pear-tree
 vim.g.pear_tree_smart_openers = 0
