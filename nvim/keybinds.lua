@@ -53,8 +53,8 @@ vim.api.nvim_set_keymap('v', '<C-/>', ":call nerdcommenter#Comment('x', 'Toggle'
 -- Open a new tab with file explorer
 vim.api.nvim_set_keymap('n', '<leader>tn', ":call nerdcommenter#Comment('x', 'Toggle')<CR>", {})
 
--- Open NERDTree
-vim.api.nvim_set_keymap('n', '<C-n>', ':NERDTreeToggle<CR>', {})
+ --Open NERDTree
+vim.api.nvim_set_keymap('n', '<C-n>', ':NERDTreeToggle<CR>:NERDTreeRefreshRoot<CR>', {})
 
 -- LSP
 vim.api.nvim_set_keymap('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
