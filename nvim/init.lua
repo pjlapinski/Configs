@@ -10,7 +10,6 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
     Plug 'morhetz/gruvbox' --Theme
     Plug 'mhinz/vim-startify' --Startup menu
     Plug 'chrisbra/colorizer' --Color the colornames and codes
-    Plug 'nathanaelkane/vim-indent-guides' --Show indentation guide lines
 
     -- Status line style
     Plug 'bling/vim-airline' --Powerline
