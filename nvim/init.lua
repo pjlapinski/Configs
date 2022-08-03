@@ -1,5 +1,5 @@
-dofile('/home/beton/.config/nvim/settings.lua')
-dofile('/home/beton/.config/nvim/keybinds.lua')
+require'settings'
+require'keybinds'
 
 -- Make sure to install vim-plug and run :PlugInstall
 local Plug = vim.fn['plug#']
@@ -180,4 +180,4 @@ require'lsp_signature'.setup {
     bind = true
 }
 
-dofile('/home/beton/.config/nvim/cmp.lua')
+require'cmp'
