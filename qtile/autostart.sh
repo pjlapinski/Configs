@@ -2,4 +2,4 @@
 
 nitrogen --restore &
 picom -b -f &
-caffeine -a &
+caffeine &
