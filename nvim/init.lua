@@ -32,19 +32,19 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
     Plug 'tell-k/vim-autopep8'
     Plug 'ray-x/lsp_signature.nvim'
 
-    -- nvim-cmp
+    -- cmp
     Plug 'hrsh7th/nvim-cmp'
-    Plug 'hrsh7th/cmp-vsnip'
-    Plug 'hrsh7th/vim-vsnip'
     Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'saadparwaiz1/cmp_luasnip'
+    Plug 'L3MON4D3/LuaSnip'
 
     -- Git
     Plug 'airblade/vim-gitgutter'
     Plug 'kdheepak/lazygit.nvim'
 
     -- Misc
-    Plug 'machakann/vim-highlightedyank'
-    Plug 'ahmedkhalf/lsp-rooter.nvim'
+    Plug 'machakann/vim-highlightedyank' --Highlights yanked text
+    Plug 'ahmedkhalf/lsp-rooter.nvim' --Changes the rootdir automagically
 vim.call('plug#end')
 
 require'impatient'
@@ -76,7 +76,6 @@ vim.g.NERDTreeShowHidden = true
 vim.g.NERDTreeShowLineNumbers = true
 vim.g.NERDTreeWinPos = 'right'
 vim.g.NERDTreeHijackNetrw = false
-vim.g.NERDTreeMinimalUI = true
 vim.g.NERDTreeWinSize = 38
 
 -- Run ranger instead of netrw or NERDTree
@@ -108,8 +107,10 @@ vim.api.nvim_create_autocmd('FileType', {
     end
 })
 
--- Setup LSP servers
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- Setup LSP servers and cmp
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require'cmp_nvim_lsp'.update_capabilities(capabilities)
+
 local nvim_lsp = require'lspconfig'
 local servers = { 'clangd', 'jedi_language_server', 'rust_analyzer' }
 
@@ -118,6 +119,28 @@ for _, lsp in ipairs(servers) do
         capabilities = capabilities
     }
 end
+
+local luasnip = require'luasnip'
+
+local cmp = require'cmp'
+cmp.setup {
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end
+    },
+    mapping = cmp.mapping.preset.insert({
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<CR>'] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true
+        }
+    }),
+    sources = {
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' }
+    }
+}
 
 -- Setup treesitter highlighting
 require'nvim-treesitter.configs'.setup {
@@ -179,5 +202,3 @@ require'nvim-treesitter.configs'.setup {
 require'lsp_signature'.setup {
     bind = true
 }
-
-require'cmp'
