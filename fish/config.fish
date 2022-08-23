@@ -9,6 +9,7 @@ abbr -a ll ls -alh --git
 abbr -a la ls -a
 abbr -a l. 'ls -Fa | egrep "^\."'
 
+set -gx EDITOR nvim
 set -gx PATH $HOME/.scripts/ $HOME/Shortcuts/ $PATH
 set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx DOTNET_SYSTEM_GLOBALIZATION_INVARIANT 1
