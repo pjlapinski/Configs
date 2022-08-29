@@ -202,8 +202,9 @@ require'lsp_signature'.setup {
     bind = true
 }
 
-local vimenter_augroup = vim.api.nvim_create_augroup('vimenter_cmds', {clear = true})
+vim.g.ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 
+local vimenter_augroup = vim.api.nvim_create_augroup('vimenter_cmds', {clear = true})
 vim.api.nvim_create_autocmd('VimEnter', {
     pattern = '*',
     desc = 'Open the file explorer if no file was opened',
