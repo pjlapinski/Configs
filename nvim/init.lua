@@ -8,7 +8,6 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
     Plug 'lewis6991/impatient.nvim' --Startup time improvements
 
     Plug 'morhetz/gruvbox' --Theme
-    Plug 'mhinz/vim-startify' --Startup menu
     Plug 'chrisbra/colorizer' --Color the colornames and codes
 
     -- Status line style
@@ -202,3 +201,17 @@ require'nvim-treesitter.configs'.setup {
 require'lsp_signature'.setup {
     bind = true
 }
+
+local vimenter_augroup = vim.api.nvim_create_augroup('vimenter_cmds', {clear = true})
+
+vim.api.nvim_create_autocmd('VimEnter', {
+    pattern = '*',
+    desc = 'Open the file explorer if no file was opened',
+    group = vimenter_augroup,
+    callback = function()
+        local argc = table.getn(vim.v.argv)
+        if argc == 1 or (argc == 2 and vim.v.argv[2] == '--embed') then --the '--embed' flag will mean that we're running in neovide
+            vim.api.nvim_exec(":Ranger", false)
+        end
+    end
+})
