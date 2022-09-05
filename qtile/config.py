@@ -214,7 +214,7 @@ def make_widgets():
             colour_have_updates=colors['foreground_alt'],
             colour_no_updates=colors['foreground_alt'],
             no_update_string='Updates: 0',
-            custom_command='yay -Qu',
+            custom_command='yay -Qyyu',
             update_interval=60,
             mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(
                 f'{terminal} {terminal_command_prefix} "yay -Syyu ; fish"')},
