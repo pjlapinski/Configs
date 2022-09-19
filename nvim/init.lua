@@ -44,6 +44,7 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
     -- Misc
     Plug 'machakann/vim-highlightedyank' --Highlights yanked text
     Plug 'ahmedkhalf/lsp-rooter.nvim' --Changes the rootdir automagically
+    Plug 'folke/which-key.nvim' --Displays possible key cords
 vim.call('plug#end')
 
 require'impatient'
@@ -201,6 +202,8 @@ require'nvim-treesitter.configs'.setup {
 require'lsp_signature'.setup {
     bind = true
 }
+
+require'which-key'.setup { }
 
 vim.g.ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 
