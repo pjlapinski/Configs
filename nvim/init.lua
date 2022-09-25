@@ -214,7 +214,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
     group = vimenter_augroup,
     callback = function()
         local argc = table.getn(vim.v.argv)
-        if argc == 1 or (argc == 2 and vim.v.argv[2] == '--embed') then --the '--embed' flag will mean that we're running in neovide
+        if argc == 1 or (argc == 2 and vim.v.argv[2] == '--embed') then --the '--embed' flag will mean that we're running in a gui
             vim.api.nvim_exec(":Ranger", false)
         end
     end
