@@ -16,7 +16,12 @@ terminal_command_prefix = 'sh -c'
 
 graphical_file_manager = 'dolphin'
 
-text_editor = 'neovide'
+
+def text_editor(*args):
+    return f'{terminal} {terminal_command_prefix} "nvim"' if len(args) == 0 else f'{terminal} {terminal_command_prefix} "nvim {" ".join(args)}"'
+
+
+notes_path = '/home/beton/.notes'
 
 font = 'Fira Mono for Powerline'
 
@@ -89,7 +94,9 @@ keys = [
         desc='Spawn the graphical file manager'),
     Key([], 'Print', lazy.spawn('spectacle'),
         desc='Spawn the screenshot utility'),
-    Key([mod], 't', lazy.spawn(text_editor), desc='Spawn the text editor')
+    Key([mod], 't', lazy.spawn(text_editor()), desc='Spawn the text editor'),
+    Key([mod, 'shift'], 'n', lazy.spawn(text_editor(
+        notes_path)), desc='Spawn the text editor with a notes file open')
 ]
 
 layouts = [
@@ -298,6 +305,6 @@ wmname = 'LG3D'
 
 
 # Run the autostart file
-@hook.subscribe.startup_once
+@ hook.subscribe.startup_once
 def autostart():
     subprocess.run([f'{config_path}/autostart.sh'])
