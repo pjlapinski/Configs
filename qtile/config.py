@@ -6,6 +6,9 @@ from libqtile import bar, layout, widget, hook, qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 
+home = os.path.expanduser('~')
+config_path = f'{home}/.config/qtile'
+
 mod = 'mod4'
 
 browser = 'vivaldi-stable'
@@ -21,12 +24,9 @@ def text_editor(*args):
     return f'{terminal} {terminal_command_prefix} "nvim"' if len(args) == 0 else f'{terminal} {terminal_command_prefix} "nvim {" ".join(args)}"'
 
 
-notes_path = '/home/beton/.notes'
+notes_path = f'{home}/.notes'
 
 font = 'Fira Mono for Powerline'
-
-home = os.path.expanduser('~')
-config_path = f'{home}/.config/qtile'
 
 colors = {
     'foreground': '#fbf1c7',
