@@ -20,7 +20,6 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
     -- File explorer
     Plug 'preservim/nerdtree'
     Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     Plug 'francoiscabrol/ranger.vim'
     Plug 'rbgrouleff/bclose.vim'
 
