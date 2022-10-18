@@ -11,7 +11,7 @@ config_path = f'{home}/.config/qtile'
 
 mod = 'mod4'
 
-browser = 'vivaldi-stable'
+browser = 'brave'
 
 terminal = 'kitty'
 terminal_file_manager = 'ranger'
@@ -110,7 +110,8 @@ layouts = [
 
 groups = [
     Group('DEV', layout='monadwide'),
-    Group('WWW', layout='monadtall', matches=[Match(wm_class=browser)]),
+    Group('WWW', layout='monadtall', matches=[
+          Match(wm_class='brave-browser')]),
     Group('GAME', layout='max'),
     Group('CHAT', layout='monadtall', matches=[
           Match(wm_class='telegram-desktop'), Match(wm_class='discord')]),
