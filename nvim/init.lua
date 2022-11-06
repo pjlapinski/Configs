@@ -7,7 +7,7 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.config/nvim/plugged')
     Plug 'lewis6991/impatient.nvim' --Startup time improvements
 
-    Plug 'morhetz/gruvbox' --Theme
+    Plug 'Shatur/neovim-ayu' --Theme
     Plug 'chrisbra/colorizer' --Color the colornames and codes
 
     -- Status line style
@@ -50,7 +50,11 @@ require'impatient'
 
 --- Theme
 vim.o.bg = 'dark'
-vim.cmd('colorscheme gruvbox')
+local ayu = require'ayu'
+ayu.setup({
+    mirage = true
+})
+ayu.colorscheme()
 vim.g.colorizer_auto_color = 1
 
 -- Airline
