@@ -209,16 +209,3 @@ require'lsp_signature'.setup {
 require'which-key'.setup { }
 
 vim.g.ranger_command_override = 'ranger --cmd "set show_hidden=true"'
-
-local vimenter_augroup = vim.api.nvim_create_augroup('vimenter_cmds', {clear = true})
-vim.api.nvim_create_autocmd('VimEnter', {
-    pattern = '*',
-    desc = 'Open the file explorer if no file was opened',
-    group = vimenter_augroup,
-    callback = function()
-        local argc = table.getn(vim.v.argv)
-        if argc == 1 or (argc == 2 and vim.v.argv[2] == '--embed') then --the '--embed' flag will mean that we're running in a gui
-            vim.api.nvim_exec(":Ranger", false)
-        end
-    end
-})
