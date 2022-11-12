@@ -95,7 +95,9 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     pattern = '*',
     desc = 'Autoformat code on buffer save',
     callback = function()
-        vim.lsp.buf.formatting_sync(nul, 100)
+        vim.lsp.buf.format({
+            async=true
+        })
     end
 })
 
