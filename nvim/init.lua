@@ -7,7 +7,9 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.config/nvim/plugged')
     Plug 'lewis6991/impatient.nvim' --Startup time improvements
 
-    Plug 'Shatur/neovim-ayu' --Theme
+    --Plug 'Shatur/neovim-ayu' --Theme
+    Plug 'briones-gabriel/darcula-solid.nvim' --Theme
+    Plug 'rktjmp/lush.nvim' --Theme
     Plug 'chrisbra/colorizer' --Color the colornames and codes
 
     -- Status line style
@@ -50,11 +52,8 @@ require'impatient'
 
 --- Theme
 vim.o.bg = 'dark'
-local ayu = require'ayu'
-ayu.setup({
-    mirage = true
-})
-ayu.colorscheme()
+vim.cmd 'colorscheme darcula-solid'
+vim.cmd 'set termguicolors'
 vim.g.colorizer_auto_color = 1
 
 -- Airline
@@ -83,6 +82,9 @@ vim.g.NERDTreeWinSize = 38
 
 -- Run ranger instead of netrw or NERDTree
 vim.g.ranger_replace_netrw = true
+
+-- Disable ranger plugin mapping to map this manually later
+vim.g.ranger_map_keys = 0
 
 -- Enable smart pairing in pear-tree
 vim.g.pear_tree_smart_openers = 0
@@ -146,6 +148,14 @@ cmp.setup {
         { name = 'luasnip' }
     }
 }
+
+-- Change diagnostics behaviour - don't show 'virtual text', but show a floating window on hover
+vim.diagnostic.config({ 
+    update_in_insert = true,
+    virtual_text = false
+})
+vim.o.updatetime = 250 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+
 
 -- Setup treesitter highlighting
 require'nvim-treesitter.configs'.setup {
