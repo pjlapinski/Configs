@@ -1,0 +1,56 @@
+set clipboard+=unnamed
+set clipboard+=ideaput
+set nu rnu
+set neb
+set nohls
+set ignorecase
+set smartcase
+
+let mapleader=" "
+
+nnoremap \e :e ~/.ideavimrc<CR>
+nnoremap \r :action IdeaVim.ReloadVimRc.reload<CR>
+
+" Come on Vim, be consistent
+nnoremap Y y$
+nnoremap S c$
+
+" Keep cursor at the same position with J
+nnoremap J mzJ`z
+
+" Keep the search centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Moving text around
+vnoremap <C-j> :action MoveLineDown<CR>
+vnoremap <C-k> :action MoveLineUp<CR>
+inoremap <C-j> :action MoveLineDown<CR>
+inoremap <C-k> :action MoveLineUp<CR>
+nnoremap <C-j> :action MoveLineDown<CR>
+nnoremap <C-k> :action MoveLineUp<CR>
+vnoremap < <gv
+vnoremap > >gv
+
+" Navigation between buffers
+nmap <leader>wn :action SplitHorizontally<CR>
+nmap <leader>wv :action SplitVertically<CR>
+nnoremap <leader>h <C-w>h
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>l <C-w>l
+
+" Close current tab
+nmap <leader>q :action CloseContent<CR>
+
+" Open project hierarchy
+nnoremap <C-n> :action ActivateProjectToolWindow<CR>
+
+" no GoToDefinition exists
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gD :action GotoDeclaration<CR>
+nnoremap gr :action ShowUsages<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gc :action ShowIntentionActions<CR>
+nnoremap ge :action GotoNextError<CR>
+nnoremap gE :action GotoPreviousError<CR>
