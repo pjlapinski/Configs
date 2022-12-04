@@ -115,8 +115,7 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- Setup LSP servers and cmp
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require'cmp_nvim_lsp'.update_capabilities(capabilities)
+local capabilities = require'cmp_nvim_lsp'.default_capabilities()
 
 local nvim_lsp = require'lspconfig'
 local servers = { 'clangd', 'jedi_language_server', 'rust_analyzer' }
