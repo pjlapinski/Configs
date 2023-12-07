@@ -7,9 +7,12 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.config/nvim/plugged')
     Plug 'lewis6991/impatient.nvim' --Startup time improvements
 
-    --Plug 'Shatur/neovim-ayu' --Theme
+    -- Themes
+    Plug 'Shatur/neovim-ayu' --Theme
     Plug 'briones-gabriel/darcula-solid.nvim' --Theme
-    Plug 'rktjmp/lush.nvim' --Theme
+    Plug 'rktjmp/lush.nvim' --Darcula requirement
+    Plug 'ellisonleao/gruvbox.nvim' --Theme
+    Plug 'Mofiqul/dracula.nvim' --Theme
     Plug 'chrisbra/colorizer' --Color the colornames and codes
 
     -- Status line style
@@ -26,6 +29,7 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
     Plug 'rbgrouleff/bclose.vim'
 
     -- LSP
+    Plug 'williamboman/mason.nvim'
     Plug 'neovim/nvim-lspconfig'
     Plug 'tmsvg/pear-tree' --Auto insert bracket pairs
     Plug ('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
@@ -46,13 +50,18 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
     Plug 'machakann/vim-highlightedyank' --Highlights yanked text
     Plug 'ahmedkhalf/lsp-rooter.nvim' --Changes the rootdir automagically
     Plug 'folke/which-key.nvim' --Displays possible key cords
+    Plug 'preservim/vim-indent-guides' --Highlights indents
 vim.call('plug#end')
 
 require'impatient'
 
 --- Theme
+require"gruvbox".setup({
+    contrast = "soft"
+})
+
 vim.o.bg = 'dark'
-vim.cmd 'colorscheme darcula-solid'
+vim.cmd 'colorscheme gruvbox'
 vim.cmd 'set termguicolors'
 vim.g.colorizer_auto_color = 1
 
@@ -63,6 +72,8 @@ vim.g['airline#extensions#tabline#enabled'] = 1
 
 -- Indent guides
 vim.g.indent_guides_enable_on_vim_startup = 1
+vim.g.indent_guides_default_mapping = 0
+vim.g.indent_guides_guide_size = 1
 
 -- Colorizing color names
 vim.g.colorizer_auto_color = 1
@@ -86,6 +97,9 @@ vim.g.ranger_replace_netrw = true
 -- Disable ranger plugin mapping to map this manually later
 vim.g.ranger_map_keys = 0
 
+-- Disable gitgutter mappings
+vim.g.gitgutter_map_keys = 0
+
 -- Enable smart pairing in pear-tree
 vim.g.pear_tree_smart_openers = 0
 vim.g.pear_tree_smart_closers = 0
@@ -94,7 +108,7 @@ vim.g.pear_tree_smart_backspace = 0
 vim.g.pear_tree_map_special_keys = 0
 
 vim.api.nvim_create_autocmd('BufWritePre', {
-    pattern = '*',
+    pattern = '!.exs',
     desc = 'Autoformat code on buffer save',
     callback = function()
         vim.lsp.buf.format({
@@ -114,16 +128,21 @@ vim.api.nvim_create_autocmd('FileType', {
     end
 })
 
--- Setup LSP servers and cmp
+-- Setup LSP servers, cmp and mason
 local capabilities = require'cmp_nvim_lsp'.default_capabilities()
 
 local nvim_lsp = require'lspconfig'
-local servers = { 'clangd', 'jedi_language_server', 'rust_analyzer' }
 
-for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-        capabilities = capabilities
-    }
+local servers = {
+    clangd = {capabilities = capabilities},
+    jedi_language_server = {capabilities = capabilities},
+    rust_analyzer = {capabilities = capabilities},
+    ols = {capabilities = capabilities},
+    elixirls = {capabilities = capabilities, cmd = { 'elixir-ls' }},
+}
+
+for lsp, options in pairs(servers) do
+    nvim_lsp[lsp].setup(options)
 end
 
 local luasnip = require'luasnip'
@@ -148,6 +167,8 @@ cmp.setup {
     }
 }
 
+require"mason".setup()
+
 -- Change diagnostics behaviour - don't show 'virtual text', but show a floating window on hover
 vim.diagnostic.config({ 
     update_in_insert = true,
@@ -162,46 +183,38 @@ require'nvim-treesitter.configs'.setup {
 	'bash',
 	'c',
 	'c_sharp',
-	'clojure',
 	'cmake',
 	'comment',
 	'cpp',
 	'css',
-	'dart',
 	'dockerfile',
 	'dot',
 	'elixir',
-	'elm',
 	'fish',
 	'go',
 	'haskell',
 	'hjson',
-	'help',
 	'html',
 	'http',
-	'java',
 	'javascript',
 	'jsdoc',
 	'json',
 	'json5',
 	'jsonc',
-	'kotlin',
 	'llvm',
-	'lua',
+    'lua',
 	'make',
 	'markdown',
-	'ninja',
+    'odin',
 	'pug',
 	'python',
 	'regex',
 	'rust',
-	'scala',
 	'scss',
 	'todotxt',
 	'toml',
 	'tsx',
 	'typescript',
-	'v',
 	'vue',
 	'vim',
 	'yaml'
