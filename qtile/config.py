@@ -86,8 +86,6 @@ keys = [
     Key([mod, 'shift'], 'slash', lazy.spawn(
         f'python {config_path}/list_keys.py'), desc='Spawn a window that lists all keybindings'),
     Key([mod], 'b', lazy.spawn(browser), desc='Spawn a browser window'),
-    Key([mod], 'n', lazy.spawn('notion-app'),
-        desc='Spawn a Notion App window'),
     Key([mod], 'e', lazy.spawn(
         f'{terminal} {terminal_command_prefix} "{terminal_file_manager}"'), desc='Spawn the terminal file manager'),
     Key([mod, 'shift'], 'e', lazy.spawn(graphical_file_manager),
@@ -245,24 +243,15 @@ second_screen_widgets = [
     (isinstance(w, widget.Net | widget.Systray | widget.CheckUpdates) or
      isinstance(w, widget.TextBox) and (w.background == colors['purple'] or w.background == colors['orange']))
 ]
-third_screen_widgets = [
-    w for w in make_widgets() if not
-    (isinstance(w, widget.Net | widget.Systray | widget.CheckUpdates) or
-     isinstance(w, widget.TextBox) and (w.background == colors['purple'] or w.background == colors['orange']))
-]
 
 # Fix the 'powerline' colors
 [w for w in second_screen_widgets if isinstance(
     w, widget.TextBox)][-1].background = colors['purple']
 
-[w for w in third_screen_widgets if isinstance(
-    w, widget.TextBox)][-1].background = colors['purple']
-
 
 screens = [
     Screen(top=bar.Bar(widgets=main_screen_widgets, size=23)),
-    Screen(top=bar.Bar(widgets=second_screen_widgets, size=23)),
-    Screen(top=bar.Bar(widgets=third_screen_widgets, size=23))
+    Screen(top=bar.Bar(widgets=second_screen_widgets, size=23))
 ]
 
 # Drag floating layouts.
