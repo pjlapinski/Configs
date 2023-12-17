@@ -212,21 +212,6 @@ def make_widgets():
         ),
         widget.TextBox(
             background=colors['orange'],
-            foreground=colors['green'],
-            **powerline_arrow_styling
-        ),
-        widget.CheckUpdates(
-            background=colors['green'],
-            colour_have_updates=colors['foreground_alt'],
-            colour_no_updates=colors['foreground_alt'],
-            no_update_string='Updates: 0',
-            custom_command='yay -Qyyu',
-            update_interval=60,
-            mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(
-                f'{terminal} {terminal_command_prefix} "yay -Syyu ; fish"')},
-        ),
-        widget.TextBox(
-            background=colors['green'],
             foreground=colors['yellow'],
             **powerline_arrow_styling
         ),
@@ -241,7 +226,7 @@ main_screen_widgets = make_widgets()
 second_screen_widgets = [
     w for w in make_widgets() if not
     (isinstance(w, widget.Net | widget.Systray | widget.CheckUpdates) or
-     isinstance(w, widget.TextBox) and (w.background == colors['purple'] or w.background == colors['orange']))
+     isinstance(w, widget.TextBox) and w.background == colors['purple'])
 ]
 
 # Fix the 'powerline' colors
