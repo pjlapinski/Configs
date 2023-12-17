@@ -26,7 +26,7 @@ def text_editor(*args):
 
 notes_path = f'{home}/.notes'
 
-font = 'Fira Mono for Powerline'
+font = 'Fira Mono Nerd Font Mono'
 
 colors = {
     'foreground': '#fbf1c7',
@@ -282,6 +282,7 @@ floating_layout = layout.Floating(
         Match(wm_class='Yad'),  # custom dialogue boxes
         Match(wm_class='Mirage'),  # image viewer
         Match(wm_class='mpv'),  # video player
+        Match(wm_class='spectacle'),  # screenshot utilit
     ]
 )
 
@@ -295,6 +296,6 @@ wmname = 'LG3D'
 
 
 # Run the autostart file
-@ hook.subscribe.startup_once
+@hook.subscribe.startup_once
 def autostart():
     subprocess.run([f'{config_path}/autostart.sh'])
