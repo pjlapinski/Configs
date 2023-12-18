@@ -24,8 +24,6 @@ def text_editor(*args):
     return f'{terminal} {terminal_command_prefix} "nvim"' if len(args) == 0 else f'{terminal} {terminal_command_prefix} "nvim {" ".join(args)}"'
 
 
-notes_path = f'{home}/.notes'
-
 font = 'Fira Mono Nerd Font Mono'
 
 colors = {
@@ -93,8 +91,7 @@ keys = [
     Key([], 'Print', lazy.spawn('spectacle'),
         desc='Spawn the screenshot utility'),
     Key([mod], 't', lazy.spawn(text_editor()), desc='Spawn the text editor'),
-    Key([mod, 'shift'], 'n', lazy.spawn(text_editor(
-        notes_path)), desc='Spawn the text editor with a notes file open')
+    Key([mod], 'o', lazy.spawn('obsidian'), desc='Spawn Obsidian window'),
 ]
 
 layouts = [
