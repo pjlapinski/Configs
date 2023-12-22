@@ -108,12 +108,11 @@ vim.g.pear_tree_smart_backspace = 0
 vim.g.pear_tree_map_special_keys = 0
 
 vim.api.nvim_create_autocmd('BufWritePre', {
-    pattern = '!.exs',
-    desc = 'Autoformat code on buffer save',
+    pattern = '*',
     callback = function()
-        vim.lsp.buf.format({
-            async=true
-        })
+        if vim.bo.filetype ~= "elixir" and vim.bo.filetype ~= "json" then
+            vim.lsp.buf.format({async=true})
+        end
     end
 })
 
