@@ -2,6 +2,9 @@ vim.o.syntax = 'on'
 vim.o.errorbells = false
 vim.o.swapfile = false
 
+-- Enable filetype detection
+vim.o.filetype = 'on'
+
 -- Tabs
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
