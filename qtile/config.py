@@ -104,7 +104,7 @@ layouts = [
 ]
 
 groups = [
-    Group('DEV', layout='monadwide'),
+    Group('MISC', layout='monadtall'),
     Group('WWW', layout='monadtall', matches=[
           Match(wm_class='brave-browser')]),
     Group('GAME', layout='max'),
@@ -112,7 +112,7 @@ groups = [
           Match(wm_class='telegram-desktop'), Match(wm_class='discord')]),
     Group('NOTES', layout='monadtall', matches=[Match(wm_class='obsidian')]),
     Group('MUSIC', layout='monadtall', matches=[Match(wm_class='spotify')]),
-    Group('MISC', layout='monadtall')
+    Group('DEV', layout='monadwide')
 ]
 
 for i, group in enumerate(groups, 1):
