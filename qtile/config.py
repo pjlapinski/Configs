@@ -88,7 +88,7 @@ keys = [
         f'{terminal} {terminal_command_prefix} "{terminal_file_manager}"'), desc='Spawn the terminal file manager'),
     Key([mod, 'shift'], 'e', lazy.spawn(graphical_file_manager),
         desc='Spawn the graphical file manager'),
-    Key([], 'Print', lazy.spawn('spectacle'),
+    Key([], 'Print', lazy.spawn('flameshot gui'),
         desc='Spawn the screenshot utility'),
     Key([mod], 't', lazy.spawn(text_editor()), desc='Spawn the text editor'),
     Key([mod], 'o', lazy.spawn('obsidian'), desc='Spawn Obsidian window'),
@@ -262,7 +262,6 @@ floating_layout = layout.Floating(
         Match(wm_class='Yad'),  # custom dialogue boxes
         Match(wm_class='Mirage'),  # image viewer
         Match(wm_class='mpv'),  # video player
-        Match(wm_class='spectacle'),  # screenshot utilit
     ]
 )
 
